@@ -16,3 +16,5 @@ LinkingTo:
 Imports: 
     Rcpp,
     RcppParallel
+URL: https://github.com/mkuehn10/pargeodist
+BugReports: https://github.com/mkuehn10/pargeodist/issues
