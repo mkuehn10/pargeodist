@@ -25,11 +25,9 @@ double dist_haversine(double lon_x, double lat_x, double lon_y, double lat_y) {
   delta_lambda = (lon_y - lon_x);
   a = sin(delta_phi / 2.0) * sin(delta_phi / 2.0) + cos(phi_1) * cos(phi_2) * sin(delta_lambda / 2.0) * sin(delta_lambda / 2.0);
   c = 2.0 * atan2(sqrt(a), sqrt(1 - a));
+
   return R * c;
 }
-
-
-
 
 struct myDistanceVector : public Worker {
   RMatrix<double> x;
@@ -42,7 +40,6 @@ struct myDistanceVector : public Worker {
 
   void operator()(std::size_t begin, std::size_t end) {
 
-    // initialize variables
     double dist = 0;
     double min = 0;
     int pos = 0;
@@ -50,12 +47,13 @@ struct myDistanceVector : public Worker {
     for (std::size_t i = begin; i < end; i++) {
       for (std::size_t j = 0; j < y.nrow(); j++) {
         dist = dist_haversine(x(i, 0), x(i, 1), y(j, 0), y(j, 1));
-        //dist = dist_spherical_cosine(x(i, 0), x(i, 1), y(j, 0), y(j, 1));
+
         // if on first position in row, set minimum to the first value
         // set pos to 0 + 1 (adjust by 1 for returning back to R)
         if (j == 0) {
           min = dist;
           pos = j + 1;
+
           // else if encounter a smaller distance, set min and pos to
           // current distance and position (+1 again to account for array indexing)
         } else if ( dist < min ) {
@@ -64,7 +62,7 @@ struct myDistanceVector : public Worker {
         }
       }
 
-      // if the minimum distance is greater than 5 miles
+      // if the minimum distance is greater than miles
       // don't assign an actual position to it
       if ((min * 0.0006213711922) > miles) {
         rvec[i] = 0;
