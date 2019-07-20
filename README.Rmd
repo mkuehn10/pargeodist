@@ -67,19 +67,16 @@ x <- cbind (-10 + 20 * runif (n_users), -10 + 20 * runif (n_users))
 y <- cbind (-10 + 20 * runif (2 * n_sites), -10 + 20 * runif (2 * n_sites))
 colnames (x) <- colnames (y) <- c ("x", "y")
 
-microbenchmark::microbenchmark(
-  maxcovr = maxcovr::distance_matrix_cpp(y, x),
-  parallel = rcpp_parallel_distm_C(x, y) * 1609.34)
-
 head(maxcovr::nearest_facility_dist(y, x))
 
-# This only returns the identifier of which site was closest, but could
-# be modified to include the same information as what is provided above
-head(rcpp_parallel_distm_C_min(x, y, 5000))
+# The distances are off since this uses the same Haversine formula, but
+# the idea is the same and the nearest site (at least in these limited cases)
+# end up being the same
+head(rcpp_parallel_nearest_facility(x, y))
 
 mb2 <- microbenchmark::microbenchmark(
   maxcovr = maxcovr::nearest_facility_dist(y, x),
-  parallel = rcpp_parallel_distm_C_min(x, y, 5000)
+  parallel = rcpp_parallel_nearest_facility(x, y)
 )
 
 mb2
