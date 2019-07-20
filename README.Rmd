@@ -7,7 +7,8 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE
 )
 ```
 # Using RcppParallel to calculate distance matrices proof of concept
@@ -21,10 +22,11 @@ library(geodist)
 library(maxcovr)
 library(microbenchmark)
 library(ggplot2)
+library(geosphere)
 Rcpp::sourceCpp("pargeodist.cpp")
 ```
 
-```{r}
+```{r distance_matrix_compare}
 # Create some dummy data to use in calculations
 set.seed(10)
 n <- 500
@@ -34,16 +36,20 @@ colnames (x) <- colnames (y) <- c ("x", "y")
 
 geodist_res <- geodist::geodist(x, y, measure = "haversine")
 maxcovr_res <- maxcovr::distance_matrix_cpp(y, x)
+geosphere_res <- geosphere::distm(x, y, fun = geosphere::distHaversine)
 parallel_res <- rcpp_parallel_distm_C(x, y) * 1609.34
 
 all.equal(geodist_res, parallel_res)
 all.equal(geodist_res, maxcovr_res)
 all.equal(maxcovr_res, parallel_res)
+all.equal(geodist_res, geosphere_res)
+all.equal(parallel_res, geosphere_res)
 
 mb1 <-
   microbenchmark(
     geodist = geodist::geodist(x, y, measure = "haversine"),
     maxcovr = maxcovr::distance_matrix_cpp(y, x),
+    geosphere = geosphere::distm(x, y, fun = geosphere::distHaversine),
     parallel = rcpp_parallel_distm_C(x, y) * 1609.34
   )
 
@@ -53,7 +59,7 @@ autoplot(mb1)
 ```
 
 # Comparing to maxcovr::nearest_facility_dist functionality
-```{r}
+```{r nearest_facility_compare}
 set.seed(10)
 n_users <- 5000
 n_sites <- 25
