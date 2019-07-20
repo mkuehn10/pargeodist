@@ -1,32 +1,41 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pargeodist
+# Using RcppParallel to calculate distance matrices proof of concept
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of pargeodist is to …
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+# devtools::install_github("njtierney/maxcovr")
+library(geodist)
+#> Warning: package 'geodist' was built under R version 3.6.1
+library(maxcovr)
+Rcpp::sourceCpp("pargeodist.cpp")
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
+``` r
+# Create some dummy data to use in calculations
+set.seed(10)
+n <- 500
+x <- cbind (-10 + 20 * stats::runif (n), -10 + 20 * stats::runif (n))
+y <- cbind (-10 + 20 * stats::runif (2 * n), -10 + 20 * stats::runif (2 * n))
+colnames (x) <- colnames (y) <- c ("x", "y")
+```
 
-You can also embed plots, for example:
+``` r
+geodist_res <- geodist::geodist(x, y, measure = "haversine")
+maxcovr_res <- maxcovr::distance_matrix_cpp(y, x)
+parallel_res <- rcpp_parallel_distm_C(x, y) * 1609.34
+
+all.equal(geodist_res, parallel_res)
+#> [1] TRUE
+all.equal(geodist_res, maxcovr_res)
+#> [1] "Mean relative difference: 0.002942463"
+all.equal(maxcovr_res, parallel_res)
+#> [1] "Mean relative difference: 0.002945609"
+```
 
 ![](README_files/figure-gfm/pressure-1.png)<!-- -->
 
