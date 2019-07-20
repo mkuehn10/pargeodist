@@ -54,11 +54,11 @@ mb1 <-
 
 mb1
 #> Unit: milliseconds
-#>       expr      min        lq      mean   median        uq      max neval
-#>    geodist  79.1307  81.32285  85.91390  84.7408  89.52365 110.0912   100
-#>    maxcovr 102.3519 105.18415 109.33866 107.4032 111.31085 128.8871   100
-#>  geosphere 276.3577 301.71860 320.56993 312.8268 325.98920 419.1602   100
-#>   parallel  16.6982  18.95315  20.77203  20.1964  21.94405  31.1643   100
+#>       expr      min        lq      mean    median        uq      max neval
+#>    geodist  79.0137  82.84275  87.60120  86.63815  90.22125 152.8196   100
+#>    maxcovr 102.2116 106.17070 109.84409 108.56470 112.70545 140.7336   100
+#>  geosphere 280.9771 303.76480 328.95195 316.30955 349.29010 484.9457   100
+#>   parallel  16.5326  18.70390  20.51562  19.97405  21.81205  31.2495   100
 #>   cld
 #>   b  
 #>    c 
@@ -94,12 +94,12 @@ head(maxcovr::nearest_facility_dist(y, x))
 # end up being the same
 head(rcpp_parallel_nearest_facility(x, y))
 #>      [,1] [,2]      [,3]
-#> [1,]   50    2  11356.34
-#> [2,]   50    6  42026.72
-#> [3,]   50   50 183882.49
-#> [4,]   50    4  79926.93
-#> [5,]   50   37 192083.93
-#> [6,]   50   35 121297.81
+#> [1,]    1    2  11356.34
+#> [2,]    2    6  42026.72
+#> [3,]    3   50 183882.49
+#> [4,]    4    4  79926.93
+#> [5,]    5   37 192083.93
+#> [6,]    6   35 121297.81
 
 mb2 <- microbenchmark::microbenchmark(
   maxcovr = maxcovr::nearest_facility_dist(y, x),
@@ -108,14 +108,15 @@ mb2 <- microbenchmark::microbenchmark(
 
 mb2
 #> Unit: milliseconds
-#>      expr       min        lq      mean    median        uq     max neval
-#>   maxcovr 52.345701 53.503301 56.101099 55.111202 58.468601 68.0661   100
-#>  parallel  7.829202  8.943952  9.474358  9.185751  9.529701 15.3292   100
-#>  cld
-#>    b
-#>   a
+#>      expr       min        lq     mean  median      uq     max neval cld
+#>   maxcovr 52.480901 54.401651 58.44284 56.9394 60.2562 87.6191   100   b
+#>  parallel  7.945101  8.953001 10.50214  9.7805 11.2249 28.2851   100  a
 
-autoplot(mb2)
+autoplot
+#> function (object, ...) 
+#> {
+#>     UseMethod("autoplot")
+#> }
+#> <bytecode: 0x0000000019cc4158>
+#> <environment: namespace:ggplot2>
 ```
-
-![](README_files/figure-gfm/nearest_facility_compare-1.png)<!-- -->

@@ -150,7 +150,7 @@ struct facilityMatrix : public Worker {
     for (std::size_t i = begin; i < end; i++) {
       for (std::size_t j = 0; j < y.nrow(); j++) {
         // row number
-        rmat(i,0) = j + 1;
+        rmat(i,0) = 0;
 
         //dist = dist_haversine(x(i, 0), x(i, 1), y(j, 0), y(j, 1));
         dist = dist_haversine(x(i, 0), x(i, 1), y(j, 0), y(j, 1));
@@ -191,6 +191,8 @@ NumericMatrix rcpp_parallel_nearest_facility(NumericMatrix x, NumericMatrix y) {
   facilityMatrix my_distance_matrix(x, y, rmat);
 
   parallelFor(0, rmat.nrow(), my_distance_matrix, 1);
-
+  for (int i = 0; i < 50; i++) {
+    rmat(i, 0) = i + 1;
+  }
   return rmat;
 }
