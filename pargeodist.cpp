@@ -18,6 +18,8 @@ double dist_haversine(double lon_x, double lat_x, double lon_y, double lat_y) {
 
   // great-circle distance
   // https://en.wikipedia.org/wiki/Haversine_formula
+  // Use formula from here:
+  // https://www.movable-type.co.uk/scripts/latlong.html
   phi_1 = lat_x;
   phi_2 = lat_y;
   delta_phi = (lat_y - lat_x);
