@@ -1,4 +1,5 @@
 // [[Rcpp::depends(RcppParallel)]]
+#define STRICT_R_HEADERS
 #include <RcppParallel.h>
 using namespace RcppParallel;
 #include <Rcpp.h>
