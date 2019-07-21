@@ -54,11 +54,11 @@ mb1 <-
 
 mb1
 #> Unit: milliseconds
-#>       expr      min        lq      mean    median        uq      max neval
-#>    geodist  79.0137  82.84275  87.60120  86.63815  90.22125 152.8196   100
-#>    maxcovr 102.2116 106.17070 109.84409 108.56470 112.70545 140.7336   100
-#>  geosphere 280.9771 303.76480 328.95195 316.30955 349.29010 484.9457   100
-#>   parallel  16.5326  18.70390  20.51562  19.97405  21.81205  31.2495   100
+#>       expr      min        lq      mean   median        uq      max neval
+#>    geodist  78.9522  81.70820  86.18693  85.2904  88.70155 104.5408   100
+#>    maxcovr 103.1759 105.60290 109.62935 108.2456 112.21180 131.8132   100
+#>  geosphere 274.6669 298.75140 321.99239 313.8929 340.23245 415.2692   100
+#>   parallel  16.7451  18.84405  20.61744  19.9012  21.78755  35.8902   100
 #>   cld
 #>   b  
 #>    c 
@@ -108,15 +108,14 @@ mb2 <- microbenchmark::microbenchmark(
 
 mb2
 #> Unit: milliseconds
-#>      expr       min        lq     mean  median      uq     max neval cld
-#>   maxcovr 52.480901 54.401651 58.44284 56.9394 60.2562 87.6191   100   b
-#>  parallel  7.945101  8.953001 10.50214  9.7805 11.2249 28.2851   100  a
+#>      expr       min        lq      mean   median       uq     max neval
+#>   maxcovr 52.552002 54.220201 57.362112 56.43670 58.94545 71.1329   100
+#>  parallel  7.732801  8.553451  9.798675  9.39845 10.15800 17.1826   100
+#>  cld
+#>    b
+#>   a
 
-autoplot
-#> function (object, ...) 
-#> {
-#>     UseMethod("autoplot")
-#> }
-#> <bytecode: 0x0000000019cc4158>
-#> <environment: namespace:ggplot2>
+autoplot(mb2)
 ```
+
+![](README_files/figure-gfm/nearest_facility_compare-1.png)<!-- -->

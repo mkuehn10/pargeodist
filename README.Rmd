@@ -81,5 +81,5 @@ mb2 <- microbenchmark::microbenchmark(
 
 mb2
 
-autoplot
+autoplot(mb2)
 ```
