@@ -10,13 +10,10 @@
 ``` r
 # devtools::install_github("njtierney/maxcovr")
 library(geodist)
-#> Warning: package 'geodist' was built under R version 3.6.1
 library(maxcovr)
 library(microbenchmark)
-#> Warning: package 'microbenchmark' was built under R version 3.6.1
 library(ggplot2)
 library(geosphere)
-#> Warning: package 'geosphere' was built under R version 3.6.1
 Rcpp::sourceCpp("pargeodist.cpp")
 ```
 
@@ -54,11 +51,11 @@ mb1 <-
 
 mb1
 #> Unit: milliseconds
-#>       expr      min        lq      mean   median        uq      max neval
-#>    geodist  78.9522  81.70820  86.18693  85.2904  88.70155 104.5408   100
-#>    maxcovr 103.1759 105.60290 109.62935 108.2456 112.21180 131.8132   100
-#>  geosphere 274.6669 298.75140 321.99239 313.8929 340.23245 415.2692   100
-#>   parallel  16.7451  18.84405  20.61744  19.9012  21.78755  35.8902   100
+#>       expr      min        lq      mean   median       uq      max neval
+#>    geodist  78.4149  80.40535  83.65290  81.7729  85.3753 106.7524   100
+#>    maxcovr 100.3360 103.50390 105.99087 104.5579 105.9978 181.9124   100
+#>  geosphere 268.4761 276.77770 285.78689 280.1866 285.2736 389.7740   100
+#>   parallel  16.5436  16.93295  18.47658  17.2765  19.0490  38.5175   100
 #>   cld
 #>   b  
 #>    c 
@@ -108,12 +105,9 @@ mb2 <- microbenchmark::microbenchmark(
 
 mb2
 #> Unit: milliseconds
-#>      expr       min        lq      mean   median       uq     max neval
-#>   maxcovr 52.552002 54.220201 57.362112 56.43670 58.94545 71.1329   100
-#>  parallel  7.732801  8.553451  9.798675  9.39845 10.15800 17.1826   100
-#>  cld
-#>    b
-#>   a
+#>      expr     min       lq      mean  median     uq     max neval cld
+#>   maxcovr 51.2825 52.98555 54.387980 53.5355 54.624 62.0949   100   b
+#>  parallel  7.6778  7.81520  8.141604  7.9338  8.257 10.8152   100  a
 
 autoplot(mb2)
 ```
