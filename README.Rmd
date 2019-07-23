@@ -29,7 +29,7 @@ Rcpp::sourceCpp("pargeodist.cpp")
 ```{r distance_matrix_compare}
 # Create some dummy data to use in calculations
 set.seed(10)
-n <- 500
+n <- 5000
 x <- cbind (-10 + 20 * stats::runif (n), -10 + 20 * stats::runif (n))
 y <- cbind (-10 + 20 * stats::runif (2 * n), -10 + 20 * stats::runif (2 * n))
 colnames (x) <- colnames (y) <- c ("x", "y")
@@ -61,8 +61,8 @@ autoplot(mb1)
 # Comparing to maxcovr::nearest_facility_dist functionality
 ```{r nearest_facility_compare}
 set.seed(10)
-n_users <- 5000
-n_sites <- 25
+n_users <- 20000
+n_sites <- 250
 x <- cbind (-10 + 20 * runif (n_users), -10 + 20 * runif (n_users))
 y <- cbind (-10 + 20 * runif (2 * n_sites), -10 + 20 * runif (2 * n_sites))
 colnames (x) <- colnames (y) <- c ("x", "y")
